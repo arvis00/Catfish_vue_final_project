@@ -179,8 +179,7 @@ export default {
       setSizeOfImg: "setSizeOfImg",
       setToRememberImgArray: "setToRememberImgArray",
       setToGuessImgArray: "setToGuessImgArray",
-      setDataFetched: "setDataFetched",
-      updateRememImgArray: "updateRememImgArray"
+      setDataFetched: "setDataFetched"
     }),
     ...mapActions({
       startTimerAfterFlip: "startTimerAfterFlip",

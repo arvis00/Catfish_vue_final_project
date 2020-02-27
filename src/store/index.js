@@ -15,7 +15,8 @@ export default {
     searchValue: null,
     toRememberImgArray: [],
     toGuessImgArray: [],
-    dataFetched: false
+    dataFetched: false,
+    secondsToRemember: "10"
 
   }),
   getters: {
@@ -48,6 +49,9 @@ export default {
     },
     dataFetched: state => {
       return state.dataFetched
+    },
+    secondsToRemember: state => {
+      return state.secondsToRemember
     }
   },
   mutations: {
@@ -81,16 +85,14 @@ export default {
     setToRememberImgArray (state, data) {
       state.toRememberImgArray = data
     },
-    updateRememImgArray (state, { property, value }) {
-      state.toRememberImgArray.forEach(storedImage => {
-        storedImage[property] = value
-      })
-    },
     setToGuessImgArray (state, data) {
       state.toGuessImgArray = data
     },
     setDataFetched (state, payload) {
       state.dataFetched = payload
+    },
+    setSecondsToRemember (state, payload) {
+      state.secondsToRemember = payload
     }
   },
   actions: {

@@ -50,23 +50,20 @@ const COLOR_CODES = {
   }
 }
 
-const TIME_LIMIT = 10
 export default {
   name: "Timer",
   data () {
     return {
-      // timePassedAfterStart: 0,
-      // timerInterval: null,
-      // noOfQuestion: 1
     }
   },
   computed: {
     ...mapGetters({
       timePassedAfterStart: "timePassedAfterStart",
-      timerInterval: "timerInterval"
+      timerInterval: "timerInterval",
+      secondsToRemember: "secondsToRemember"
     }),
     timeLeft () {
-      return TIME_LIMIT - this.timePassedAfterStart
+      return this.secondsToRemember - this.timePassedAfterStart
     },
 
     circleDasharray () {
@@ -74,8 +71,8 @@ export default {
     },
 
     timeFraction () {
-      const rawTimeFraction = this.timeLeft / TIME_LIMIT
-      return rawTimeFraction - (1 / TIME_LIMIT) * (1 - rawTimeFraction)
+      const rawTimeFraction = this.timeLeft / this.secondsToRemember
+      return rawTimeFraction - (1 / this.secondsToRemember) * (1 - rawTimeFraction)
     },
 
     remainingPathColor () {

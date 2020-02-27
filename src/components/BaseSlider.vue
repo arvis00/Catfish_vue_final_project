@@ -44,7 +44,7 @@ export default {
 }
 
 .slideContainer {
-  padding: 38% 17%;
+  padding: 0 15% 0;
 }
 .slider:hover {
   opacity: 1;

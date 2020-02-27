@@ -45,17 +45,27 @@
       <BaseBox
         class="startBox boxSize"
         size="300"
-        textFront="SIZE"
+        textFront="SETTINGS"
         BgColorFront="rgb(23, 68, 116)"
         BgColorBack="#414141"
         paddingCenterBack="0"
         ><BaseSlider
+        class="numberOfImgSelect"
           min="4"
           max="30"
           step="2"
           :value="numberOfImg"
           @input="setNumberOfImg"
           >Number of cards:
+        </BaseSlider>
+        <BaseSlider
+        class="secondsToRemember"
+          min="1"
+          max="60"
+          step="1"
+          :value="secondsToRemember"
+          @input="setSecondsToRemember"
+          >Time to memorize:
         </BaseSlider>
       </BaseBox>
     <!-- <div id="three-container"></div> -->
@@ -87,7 +97,8 @@ export default {
   computed: {
     ...mapGetters({
       numberOfImg: "numberOfImg",
-      searchValue: "searchValue"
+      searchValue: "searchValue",
+      secondsToRemember: "secondsToRemember"
     })
   },
   methods: {
@@ -116,7 +127,8 @@ export default {
     },
     ...mapMutations({
       setNumberOfImg: "setNumberOfImg",
-      setSearchValue: "setSearchValue"
+      setSearchValue: "setSearchValue",
+      setSecondsToRemember: "setSecondsToRemember"
     }),
     ...mapActions({
       startTimerAfterStart: "startTimerAfterStart",
@@ -155,6 +167,11 @@ export default {
   }
   .boxTitle {
     pointer-events: none;
+  }
+  .boxSize{
+    .numberOfImgSelect{
+      padding-top: 73px;
+    }
   }
 }
 .startBtn {
