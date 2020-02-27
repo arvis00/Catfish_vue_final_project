@@ -408,11 +408,13 @@ export default {
           .frontCard {
             border-radius: 5px;
             background: url(../assets/cardBcg.jpg);
+            &.selected {
+              background: url(../assets/selector.jpg);
+              background-size: cover;
+        }
           }
         }
-        .selected {
-          background: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5));
-        }
+
       }
     }
   }
