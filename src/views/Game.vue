@@ -57,7 +57,9 @@
                   width: sizeOfImg + 'px',
                   transform:
                     'rotateX(-90deg) translateZ(-' + sizeOfImg / 2 + 'px)',
-                    backgroundPosition: `${100/numberOfImg*index}% ${100/numberOfImg*index}%`
+                  backgroundPosition: `${(100 / numberOfImg) * index}% ${(100 /
+                    numberOfImg) *
+                    index}%`
                 }"
                 :class="{
                   selected: image.selected
@@ -265,6 +267,8 @@ export default {
         console.log(this.toRememberImgArray)
         this.totalResult += 2
       }
+      this.flipIncorrectCardsTemp()
+      setTimeout(this.flipIncorrectCardsTemp, 2000)
       this.tempResult = 0
       this.selectionCounter = 0
       const tempArray = this.toRememberImgArray.map(storedImage => {
@@ -273,6 +277,25 @@ export default {
             ...storedImage,
             selected: false
           }
+        }
+      })
+      this.setToRememberImgArray(tempArray)
+    },
+    flipIncorrectCardsTemp () {
+      console.log("timeout")
+
+      const tempArray = this.toRememberImgArray.map(storedImage => {
+        if (storedImage.selected === true) {
+          console.log("storedimage", storedImage)
+
+          return {
+            ...storedImage,
+            guessed: true
+          }
+        }
+        return {
+          ...storedImage,
+          guessed: false
         }
       })
       this.setToRememberImgArray(tempArray)
@@ -315,21 +338,21 @@ export default {
     }
   },
   mounted () {
-    // if (localStorage.getItem("toRememberImg")) {
-    //   this.setToRememberImgArray(
-    //     JSON.parse(localStorage.getItem("toRememberImg"))
-    //   )
-    //   const result = JSON.parse(localStorage.getItem("toGuessImg"))
-    //   this.setDataFetched(true)
-    //   this.setToGuessImgArray(
-    //     result.map(storedImage => {
-    //       return {
-    //         ...storedImage,
-    //         hidden: false
-    //       }
-    //     })
-    //   )
-    // }
+    if (localStorage.getItem("toRememberImg")) {
+      this.setToRememberImgArray(
+        JSON.parse(localStorage.getItem("toRememberImg"))
+      )
+      const result = JSON.parse(localStorage.getItem("toGuessImg"))
+      this.setDataFetched(true)
+      this.setToGuessImgArray(
+        result.map(storedImage => {
+          return {
+            ...storedImage,
+            hidden: false
+          }
+        })
+      )
+    }
     this.tempResult = 0
     this.selectionCounter = 0
     this.totalResult = 0
@@ -412,10 +435,9 @@ export default {
             &.selected {
               background: url(../assets/selector.jpg);
               background-size: cover;
-        }
+            }
           }
         }
-
       }
     }
   }
@@ -458,9 +480,9 @@ export default {
         display: inline;
         margin: 10px;
       }
-      .homeLink{
-          text-decoration: none;
-        }
+      .homeLink {
+        text-decoration: none;
+      }
     }
 
     .taskImgContainer {
