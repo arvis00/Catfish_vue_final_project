@@ -338,21 +338,21 @@ export default {
     }
   },
   mounted () {
-    if (localStorage.getItem("toRememberImg")) {
-      this.setToRememberImgArray(
-        JSON.parse(localStorage.getItem("toRememberImg"))
-      )
-      const result = JSON.parse(localStorage.getItem("toGuessImg"))
-      this.setDataFetched(true)
-      this.setToGuessImgArray(
-        result.map(storedImage => {
-          return {
-            ...storedImage,
-            hidden: false
-          }
-        })
-      )
-    }
+    // if (localStorage.getItem("toRememberImg")) {
+    //   this.setToRememberImgArray(
+    //     JSON.parse(localStorage.getItem("toRememberImg"))
+    //   )
+    //   const result = JSON.parse(localStorage.getItem("toGuessImg"))
+    //   this.setDataFetched(true)
+    //   this.setToGuessImgArray(
+    //     result.map(storedImage => {
+    //       return {
+    //         ...storedImage,
+    //         hidden: false
+    //       }
+    //     })
+    //   )
+    // }
     this.tempResult = 0
     this.selectionCounter = 0
     this.totalResult = 0
