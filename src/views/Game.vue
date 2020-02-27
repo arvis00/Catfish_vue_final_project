@@ -7,7 +7,7 @@
         max="300"
         step="1"
         :value="sizeOfImg"
-        padding="0"
+        padding="0 10px"
         @input="setSizeOfImg"
         >Change size of cards:</BaseSlider
       >
@@ -401,7 +401,7 @@ export default {
     text-align: center;
     margin: 18px 0;
     height: 54px;
-    margin-right: 167px;
+    margin-right: 188px;
     div {
       margin: 14px 0;
     }

@@ -127,7 +127,7 @@ export default {
 
   &__path-elapsed {
     stroke-width: 10px;
-    stroke: grey;
+    stroke: #414141;
   }
 
   &__path-remaining {
@@ -140,15 +140,15 @@ export default {
     stroke: currentColor;
 
     &.green {
-      color: rgb(65, 184, 131);
+      color: #48a56a;
     }
 
     &.orange {
-      color: orange;
+      color: #D8AD4E;
     }
 
     &.red {
-      color: red;
+      color: #ff6860;
     }
   }
 
@@ -161,6 +161,7 @@ export default {
     align-items: center;
     justify-content: center;
     font-size: 35px;
+    color: #414141;
   }
 }
 </style>
