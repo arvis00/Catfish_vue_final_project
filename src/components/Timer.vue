@@ -50,7 +50,7 @@ const COLOR_CODES = {
   }
 }
 
-const TIME_LIMIT = 3
+const TIME_LIMIT = 10
 export default {
   name: "Timer",
   data () {

@@ -134,7 +134,7 @@ export default {
             hidden: false
           }
         }))
-        dispatch("saveInfo")
+        // dispatch("saveInfo") //localstorage turned off
         return true
       } catch (error) {
         return false

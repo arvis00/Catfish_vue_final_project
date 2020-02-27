@@ -102,7 +102,7 @@
           <BaseButton class="bottomBtn" @click="resetGame">
             RESET GAME
           </BaseButton>
-          <router-link to="/">
+          <router-link to="/" class="homeLink">
             <BaseButton class="bottomBtn">
               HOME
             </BaseButton>
@@ -314,21 +314,21 @@ export default {
     }
   },
   mounted () {
-    if (localStorage.getItem("toRememberImg")) {
-      this.setToRememberImgArray(
-        JSON.parse(localStorage.getItem("toRememberImg"))
-      )
-      const result = JSON.parse(localStorage.getItem("toGuessImg"))
-      this.setDataFetched(true)
-      this.setToGuessImgArray(
-        result.map(storedImage => {
-          return {
-            ...storedImage,
-            hidden: false
-          }
-        })
-      )
-    }
+    // if (localStorage.getItem("toRememberImg")) {
+    //   this.setToRememberImgArray(
+    //     JSON.parse(localStorage.getItem("toRememberImg"))
+    //   )
+    //   const result = JSON.parse(localStorage.getItem("toGuessImg"))
+    //   this.setDataFetched(true)
+    //   this.setToGuessImgArray(
+    //     result.map(storedImage => {
+    //       return {
+    //         ...storedImage,
+    //         hidden: false
+    //       }
+    //     })
+    //   )
+    // }
     this.tempResult = 0
     this.selectionCounter = 0
     this.totalResult = 0
@@ -454,6 +454,9 @@ export default {
       .bottomBtn {
         display: inline;
         margin: 10px;
+        &.homeLink{
+          text-decoration: none;
+        }
       }
     }
 

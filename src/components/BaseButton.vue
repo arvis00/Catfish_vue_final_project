@@ -27,5 +27,6 @@ button {
   font-size: 15px;
   outline: none;
   cursor: pointer;
+  text-decoration: none;
 }
 </style>
