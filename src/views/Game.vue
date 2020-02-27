@@ -310,6 +310,7 @@ export default {
       this.setToRememberImgArray(tempArray)
       this.gameLives = 3
       this.flipCards = false
+      this.totalResult = 0
       this.startTimerAfterStart()
     }
   },
