@@ -454,10 +454,10 @@ export default {
       .bottomBtn {
         display: inline;
         margin: 10px;
-        &.homeLink{
+      }
+      .homeLink{
           text-decoration: none;
         }
-      }
     }
 
     .taskImgContainer {
