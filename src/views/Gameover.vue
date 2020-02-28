@@ -2,7 +2,7 @@
   <div class="gameover">
     <h1>GAME OVER!</h1>
     <router-link to="/game">
-      <BaseButton class="gamoverBtn">
+      <BaseButton class="gamoverBtn" @click=fetchImages>
         TRY AGAIN
       </BaseButton>
     </router-link>
@@ -16,10 +16,17 @@
 
 <script>
 import BaseButton from "../components/BaseButton.vue"
+import { mapActions } from "vuex"
+
 export default {
   name: "Gameover",
   components: {
     BaseButton
+  },
+  methods: {
+    ...mapActions({
+      fetchImages: "fetchImages"
+    })
   }
 }
 
