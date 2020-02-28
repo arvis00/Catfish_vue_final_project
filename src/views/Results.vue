@@ -2,7 +2,8 @@
   <div class="results">
     <h1>Congrats!</h1>
     <div class="timeResult">
-      <h1>Your time is {{timestamp}}</h1></div>
+      <h1>Your time is {{ timestamp }}</h1>
+    </div>
     <router-link to="/game">
       <BaseButton class="resultBtn">
         TRY AGAIN
@@ -35,22 +36,29 @@ export default {
       timePassedAfterFlip: "timePassedAfterFlip"
     })
   },
+  methods: {
+    makeTwoDigitTimer (n) {
+      return (n < 10 ? "0" : "") + n
+    }
+  },
   mounted () {
     const minutes = Math.floor(this.timePassedAfterFlip / 60)
     const seconds = this.timePassedAfterFlip % 60
-    this.timestamp = `${minutes}:${seconds}`
+    this.timestamp = `${this.makeTwoDigitTimer(
+      minutes
+    )}:${this.makeTwoDigitTimer(seconds)}`
   }
 }
 </script>
 
 <style>
-.results{
+.results {
   display: flex;
   justify-content: center;
   flex-direction: column;
   align-items: center;
 }
-.resultBtn{
-    margin: 30px 0;
-  }
+.resultBtn {
+  margin: 30px 0;
+}
 </style>

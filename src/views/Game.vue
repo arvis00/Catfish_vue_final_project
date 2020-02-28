@@ -12,7 +12,7 @@
         >Change size of cards:</BaseSlider
       >
       <div class="timePassedTimer">
-        <div>{{ timePassedAfterFlip }}</div>
+        <div>{{ changeTimeFormat }}</div>
       </div>
       <div class="lives">
         <p>Tries left</p>
@@ -149,23 +149,19 @@ export default {
       itemsForMutating: {
         condition: [],
         change: []
-      }
+      },
+      timestamp: null
     }
   },
   computed: {
     imageToGuessDisplayed () {
       return this.toGuessImgArray[this.imageIndex]
     },
-    // timePassedConvToMin(){
-    //   if(this.timePassedAfterFlip>60){
-    //     this.timePassedAfterFlip
-    //   }
-    // },
-    //     function str_pad_left(string,pad,length) {
-    //     return (new Array(length+1).join(pad)+string).slice(-length);
-    // }
-
-    // this.finalTime = str_pad_left(minutes,'0',2)+':'+str_pad_left(seconds,'0',2);
+    changeTimeFormat () {
+      const minutes = Math.floor(this.timePassedAfterFlip / 60)
+      const seconds = this.timePassedAfterFlip % 60
+      return `${this.makeTwoDigitTimer(minutes)}:${this.makeTwoDigitTimer(seconds)}`
+    },
     ...mapGetters({
       numberOfImg: "numberOfImg",
       sizeOfImg: "sizeOfImg",
@@ -198,7 +194,9 @@ export default {
       stopTimer: "stopTimer",
       fetchImages: "fetchImages"
     }),
-
+    makeTwoDigitTimer (n) {
+      return (n < 10 ? "0" : "") + n
+    },
     nextImage () {
       if (this.tempResult === 2) {
         this.clearValues()
@@ -301,10 +299,18 @@ export default {
         // this.flipIncorrectCardsTemp();
         this.itemsForMutating.condition = ["selected", true]
         this.itemsForMutating.change = ["guessed"]
-        this.mutateImgArray(true, this.toRememberImgArray, this.itemsForMutating)
+        this.mutateImgArray(
+          true,
+          this.toRememberImgArray,
+          this.itemsForMutating
+        )
         setTimeout(() => {
           // this.flipIncorrectCardsTemp();
-          this.mutateImgArray(true, this.toRememberImgArray, this.itemsForMutating)
+          this.mutateImgArray(
+            true,
+            this.toRememberImgArray,
+            this.itemsForMutating
+          )
 
           this.tempResult = 0
           this.selectionCounter = 0
