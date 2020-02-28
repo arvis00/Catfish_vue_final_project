@@ -4,7 +4,7 @@
     <div class="timeResult">
       <h1>Your time is {{timestamp}}</h1></div>
     <router-link to="/game">
-      <BaseButton class="resultBtn" @click="startTimerAfterStart">
+      <BaseButton class="resultBtn">
         TRY AGAIN
       </BaseButton>
     </router-link>
@@ -18,7 +18,7 @@
 
 <script>
 import BaseButton from "../components/BaseButton.vue"
-import { mapActions, mapGetters } from "vuex"
+import { mapGetters } from "vuex"
 
 export default {
   name: "Results",
@@ -34,12 +34,6 @@ export default {
     ...mapGetters({
       timePassedAfterFlip: "timePassedAfterFlip"
     })
-  },
-  methods: {
-    ...mapActions({
-      startTimerAfterStart: "startTimerAfterStart"
-    })
-
   },
   mounted () {
     const minutes = Math.floor(this.timePassedAfterFlip / 60)

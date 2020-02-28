@@ -91,24 +91,34 @@
           class="buttonContainer"
           :class="{ showBtn: flipCards, hideBtn: !flipCards }"
         >
-          <BaseButton class="bottomBtn" @click="nextImage">
-            NEXT IMAGE
-          </BaseButton>
-          <BaseButton
-            class="bottomBtn"
-            :disabled="selectionCounter !== 2"
-            @click="checkSelection"
-          >
-            CHECK
-          </BaseButton>
-          <BaseButton class="bottomBtn" @click="resetGame">
-            RESET GAME
-          </BaseButton>
-          <router-link to="/" class="homeLink">
-            <BaseButton class="bottomBtn">
-              HOME
+          <div class="nextContainer">
+            <BaseButton
+              class="bottomBtn"
+              v-if="selectionCounter !== 2"
+              @click="nextImage"
+            >
+              NEXT IMAGE
             </BaseButton>
-          </router-link>
+
+            <BaseButton
+              v-if="selectionCounter === 2"
+              class="bottomBtn"
+              :disabled="selectionCounter !== 2"
+              @click="checkSelection"
+            >
+              CHECK
+            </BaseButton>
+          </div>
+          <div class="otherBtnContainer">
+            <BaseButton class="bottomBtn" @click="resetGame">
+              RESET GAME
+            </BaseButton>
+            <router-link to="/" class="homeLink">
+              <BaseButton class="bottomBtn">
+                HOME
+              </BaseButton>
+            </router-link>
+          </div>
         </div>
       </div>
     </div>
@@ -130,10 +140,7 @@ export default {
   },
   data () {
     return {
-      // toRememberImgArray: [],
-      // toGuessImgArray: [],
       imageIndex: 0,
-      // dataFetched: false,
       selectionCounter: 0,
       tempResult: 0,
       totalResult: 0,
@@ -189,7 +196,18 @@ export default {
     }),
 
     nextImage () {
-      this.clearValues()
+      if (this.tempResult === 2) {
+        this.clearValues()
+      } else {
+        this.selectionCounter = 0
+        const tempArray = this.toRememberImgArray.map(storedImage => {
+          return {
+            ...storedImage,
+            selected: false
+          }
+        })
+        this.setToRememberImgArray(tempArray)
+      }
       if (
         this.imageIndex < this.toGuessImgArray.length - 1 &&
         !this.toGuessImgArray[this.imageIndex + 1].hidden
@@ -257,7 +275,8 @@ export default {
           if (storedImage.selected === true) {
             return {
               ...storedImage,
-              guessed: true
+              guessed: true,
+              selected: false
             }
           }
           return storedImage
@@ -265,37 +284,42 @@ export default {
         this.setToRememberImgArray(updatedRemArray)
         console.log(this.toRememberImgArray)
         this.totalResult += 2
-      }
-      this.flipIncorrectCardsTemp()
-      setTimeout(this.flipIncorrectCardsTemp, 2000)
-      this.tempResult = 0
-      this.selectionCounter = 0
-      const tempArray = this.toRememberImgArray.map(storedImage => {
-        if (storedImage) {
+        this.tempResult = 0
+        this.selectionCounter = 0
+        const tempArray = this.toRememberImgArray.map(storedImage => {
           return {
             ...storedImage,
             selected: false
           }
-        }
-      })
-      this.setToRememberImgArray(tempArray)
+        })
+        this.setToRememberImgArray(tempArray)
+      } else {
+        this.flipIncorrectCardsTemp() // bug
+        setTimeout(() => {
+          this.flipIncorrectCardsTemp()
+          this.tempResult = 0
+          this.selectionCounter = 0
+          const tempArray = this.toRememberImgArray.map(storedImage => {
+            return {
+              ...storedImage,
+              selected: false
+            }
+          })
+          this.setToRememberImgArray(tempArray)
+        }, 600)
+      }
     },
     flipIncorrectCardsTemp () {
       console.log("timeout")
 
       const tempArray = this.toRememberImgArray.map(storedImage => {
-        if (storedImage.selected === true) {
-          console.log("storedimage", storedImage)
-
+        if (storedImage.selected === true && this.selectionCounter === 2) {
           return {
             ...storedImage,
-            guessed: true
+            guessed: !storedImage.guessed
           }
         }
-        return {
-          ...storedImage,
-          guessed: false
-        }
+        return storedImage
       })
       this.setToRememberImgArray(tempArray)
     },
@@ -322,14 +346,19 @@ export default {
       this.clearValues()
       this.imageIndex = 0
       const tempArray = this.toRememberImgArray.map(storedImage => {
-        if (storedImage) {
-          return {
-            ...storedImage,
-            guessed: false
-          }
+        return {
+          ...storedImage,
+          guessed: false
         }
       })
       this.setToRememberImgArray(tempArray)
+      const updatedGuessArray = this.toGuessImgArray.map(storedImage => {
+        return {
+          ...storedImage,
+          hidden: false
+        }
+      })
+      this.setToGuessImgArray(updatedGuessArray)
       this.gameLives = 3
       this.flipCards = false
       this.totalResult = 0
@@ -356,6 +385,7 @@ export default {
     this.selectionCounter = 0
     this.totalResult = 0
     this.imageIndex = 0
+    this.resetGame()
     this.startTimerAfterStart()
   }
 }
@@ -475,12 +505,21 @@ export default {
 
     .buttonContainer {
       margin-top: 20px;
+      display: flex;
+      .nextContainer {
+        width: 65%;
+        text-align: right;
+      }
+      .otherBtnContainer {
+        width: 50%;
+        text-align: right;
+        .homeLink {
+          text-decoration: none;
+        }
+      }
       .bottomBtn {
         display: inline;
         margin: 10px;
-      }
-      .homeLink {
-        text-decoration: none;
       }
     }
 
