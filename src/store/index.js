@@ -6,7 +6,7 @@ let time = null
 export default {
   strict: process.env.NODE_ENV === "development",
   state: () => ({
-    numberOfImg: "10",
+    numberOfImg: "30",
     timePassedAfterStart: 0,
     timePassedAfterFlip: 0,
     timerInterval: null,
@@ -16,7 +16,7 @@ export default {
     toRememberImgArray: [],
     toGuessImgArray: [],
     dataFetched: false,
-    secondsToRemember: "10"
+    secondsToRemember: "15"
 
   }),
   getters: {
