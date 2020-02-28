@@ -140,9 +140,6 @@ export default {
         return true
       } catch (error) {
         return false
-        // console.log("error", error)
-
-        // throw error
       }
     },
     saveInfo ({ state }) {

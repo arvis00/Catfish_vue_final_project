@@ -145,7 +145,11 @@ export default {
       tempResult: 0,
       totalResult: 0,
       flipCards: false,
-      gameLives: 3
+      gameLives: 3,
+      itemsForMutating: {
+        condition: [],
+        change: []
+      }
     }
   },
   computed: {
@@ -294,9 +298,14 @@ export default {
         })
         this.setToRememberImgArray(tempArray)
       } else {
-        this.flipIncorrectCardsTemp() // bug
+        // this.flipIncorrectCardsTemp();
+        this.itemsForMutating.condition = ["selected", true]
+        this.itemsForMutating.change = ["guessed"]
+        this.mutateImgArray(true, this.toRememberImgArray, this.itemsForMutating)
         setTimeout(() => {
-          this.flipIncorrectCardsTemp()
+          // this.flipIncorrectCardsTemp();
+          this.mutateImgArray(true, this.toRememberImgArray, this.itemsForMutating)
+
           this.tempResult = 0
           this.selectionCounter = 0
           const tempArray = this.toRememberImgArray.map(storedImage => {
@@ -309,19 +318,37 @@ export default {
         }, 600)
       }
     },
-    flipIncorrectCardsTemp () {
-      console.log("timeout")
+    // flipIncorrectCardsTemp () {
+    //   console.log("timeout")
 
-      const tempArray = this.toRememberImgArray.map(storedImage => {
-        if (storedImage.selected === true && this.selectionCounter === 2) {
+    //   const tempArray = this.toRememberImgArray.map(storedImage => {
+    //     if (storedImage.selected === true && this.selectionCounter === 2) {
+    //       return {
+    //         ...storedImage,
+    //         guessed: !storedImage.guessed
+    //       }
+    //     }
+    //     return storedImage
+    //   })
+    //   this.setToRememberImgArray(tempArray)
+    //   // const items = { condition: ["selected", true], change: ["guessed", false] }
+    //   // this.mutateImgArray(this.toRememberImgArray, this.items)
+    // },
+    mutateImgArray (needIf, array, { condition, change }) {
+      const tempArray = array.map(storedImage => {
+        if (needIf ? storedImage[condition[0]] === condition[1] : true) {
           return {
             ...storedImage,
-            guessed: !storedImage.guessed
+            [change[0]]: !storedImage[change[0]]
           }
         }
         return storedImage
       })
-      this.setToRememberImgArray(tempArray)
+      if (array === this.toRememberImgArray) {
+        this.setToRememberImgArray(tempArray)
+      } else {
+        this.setToGuessImgArray(tempArray)
+      }
     },
     failedAttempt () {
       this.clearValues()
@@ -395,7 +422,6 @@ export default {
 .header {
   display: flex;
   justify-content: space-between;
-  // margin: 30px;
   font-size: 20px;
   font-weight: 700;
   line-height: 1.2;
@@ -476,24 +502,13 @@ export default {
   .imgListItemFlip {
     transform: rotateX(90deg);
   }
-  .imgListItem:hover {
-    // transform: rotateX(-10deg);
-  }
   .showImg {
     display: block;
-    // visibility: visible;
     border-radius: 5px;
-    // margin: 0;
   }
   .hideImg {
     display: none;
-    // visibility: hidden;
-    // position: absolute;
-    // right: -1000px;
   }
-  // .timerGame{
-  //   z-index: -100;
-  // }
   .showBtn {
     visibility: visible;
   }
