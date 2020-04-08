@@ -1,5 +1,11 @@
 # catfish
 
+To run the app:
+
+download repo
+yarn install
+yarn serve
+
 Final project for Vue.js course. It is a memory game where you have to remember the pairs of cards, flip them over and guess the right cards. The image to guess can also be a decoy which is not existing on the main board.
 
 There are two modes of the game: fetch random photos or fetch photos matching your search criteria.
